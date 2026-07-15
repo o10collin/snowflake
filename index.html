@@ -1,1 +1,368 @@
 
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snowflake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+
+<!-- Order matters: theme defines the tokens everything else reads,
+     responsive must come last so its overrides win. -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/feeds.css">
+<link rel="stylesheet" href="css/todo.css">
+<link rel="stylesheet" href="css/settings.css">
+<link rel="stylesheet" href="css/overlays.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div id="nav">
+  <div id="logo"><i class="ti ti-snowflake"></i>snowflake.</div>
+  <div class="section-label"><i class="ti ti-layout-grid"></i>Navigation</div>
+  <ul>
+    <li><button class="nav-btn active" data-view="dashboard"><i class="ti ti-home"></i><span class="label">Dashboard</span><span class="nav-shortcut">⌥D</span></button></li>
+    <li><button class="nav-btn" data-view="youtube"><i class="ti ti-brand-youtube"></i><span class="label">YouTube</span><span class="nav-shortcut">⌥Y</span></button></li>
+    <li><button class="nav-btn" data-view="twitch"><i class="ti ti-brand-twitch"></i><span class="label">Twitch</span><span class="nav-shortcut">⌥T</span></button></li>
+  </ul>
+  <div id="nav-bottom">
+    <ul>
+      <li><button class="nav-btn" data-view="settings"><i class="ti ti-settings"></i><span class="label">Einstellungen</span><span class="nav-shortcut">⌥S</span></button></li>
+    </ul>
+  </div>
+</div>
+
+<div id="main">
+
+  <div id="view-dashboard" class="view active">
+    <div id="top-bar">
+      <form id="search-form">
+        <i class="ti ti-search"></i>
+        <input type="text" id="search-input" placeholder="Suchen..." autocomplete="off">
+        <span class="search-hint">/</span>
+      </form>
+      <a href="https://app.apponfly.com/trial" target="_blank" id="vm-button">
+        <i class="ti ti-brand-windows"></i>
+        <span>Neue Windows VM</span>
+        <span class="btn-shortcut">⌥W</span>
+      </a>
+    </div>
+    <div id="dashboard-center">
+      <div id="greeting"></div>
+      <div id="clock"></div>
+      <div id="date"></div>
+
+      <div id="stats-row">
+        <div class="stat-tile" id="stat-videos-tile">
+          <div class="stat-value" id="stat-videos">–</div>
+          <div class="stat-label"><i class="ti ti-brand-youtube"></i>Videos · Heute</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-value" id="stat-live">–</div>
+          <div class="stat-label"><i class="ti ti-broadcast"></i>Gerade Live</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-value" id="stat-todos">0</div>
+          <div class="stat-label"><i class="ti ti-checklist"></i>Aufgaben</div>
+        </div>
+      </div>
+
+      <div id="dashboard-columns">
+        <div class="dashboard-column" id="quick-links-column">
+          <div class="section-label"><i class="ti ti-bookmark"></i>Schnellzugriff</div>
+          <div id="quick-links"></div>
+        </div>
+
+        <div class="dashboard-column" id="todo-column">
+          <div class="section-label"><i class="ti ti-checklist"></i>To-Do</div>
+          <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="Neue Aufgabe..." autocomplete="off">
+          </form>
+          <div id="todo-list"></div>
+        </div>
+      </div>
+
+      <div id="latest-video-section" style="display: none;">
+        <div class="section-label"><i class="ti ti-sparkles"></i>Neuestes Video</div>
+        <a id="latest-video" class="latest-card" target="_blank">
+          <div class="play-icon"><i class="ti ti-player-play"></i></div>
+          <div class="latest-info">
+            <div class="channel-label"><i class="ti ti-brand-youtube"></i><span class="latest-channel"></span></div>
+            <div class="latest-title"></div>
+          </div>
+          <span class="timestamp"><i class="ti ti-clock"></i><span class="latest-time"></span></span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-youtube" class="view">
+    <div class="section-label"><i class="ti ti-brand-youtube"></i>YouTube Feed</div>
+    <div id="video-grid">
+      <div class="skeleton skeleton-box"></div>
+      <div class="skeleton skeleton-box"></div>
+      <div class="skeleton skeleton-box"></div>
+    </div>
+  </div>
+
+  <div id="view-twitch" class="view">
+    <div class="section-label"><i class="ti ti-brand-twitch"></i>Twitch</div>
+    <div id="stream-grid">
+      <div class="skeleton skeleton-box"></div>
+      <div class="skeleton skeleton-box"></div>
+      <div class="skeleton skeleton-box"></div>
+    </div>
+  </div>
+
+  <div id="view-settings" class="view">
+
+    <div class="settings-group">
+      <div class="section-label"><i class="ti ti-palette"></i>Erscheinungsbild</div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Design</div>
+          <div class="settings-desc">Dunkel, hell oder dem System folgen</div>
+        </div>
+        <div class="settings-control">
+          <div class="segmented" data-setting="theme">
+            <button data-value="dark">Dunkel</button>
+            <button data-value="light">Hell</button>
+            <button data-value="system">System</button>
+          </div>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Akzentfarbe</div>
+          <div class="settings-desc">Färbt Live-Punkte, Haken und den Video-Glow</div>
+        </div>
+        <div class="settings-control">
+          <div class="swatches" id="accent-swatches"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <div class="section-label"><i class="ti ti-layout-dashboard"></i>Dashboard</div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Name</div>
+          <div class="settings-desc">Wird in der Begrüßung angezeigt</div>
+        </div>
+        <div class="settings-control">
+          <input type="text" class="field-input" id="setting-name" placeholder="Dein Name" autocomplete="off">
+        </div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Uhr anzeigen</div>
+        </div>
+        <div class="settings-control"><button class="toggle" data-setting="showClock"></button></div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">24-Stunden-Format</div>
+          <div class="settings-desc">Aus = 12-Stunden mit AM/PM</div>
+        </div>
+        <div class="settings-control"><button class="toggle" data-setting="clock24h"></button></div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Sekunden anzeigen</div>
+        </div>
+        <div class="settings-control"><button class="toggle" data-setting="showSeconds"></button></div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Infoboxen</div>
+          <div class="settings-desc">Videos, Live-Status und Aufgaben</div>
+        </div>
+        <div class="settings-control"><button class="toggle" data-setting="showStats"></button></div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Schnellzugriff</div>
+        </div>
+        <div class="settings-control"><button class="toggle" data-setting="showQuickLinks"></button></div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">To-Do</div>
+        </div>
+        <div class="settings-control"><button class="toggle" data-setting="showTodo"></button></div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Neuestes Video</div>
+        </div>
+        <div class="settings-control"><button class="toggle" data-setting="showLatest"></button></div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Feed-Sidebar</div>
+          <div class="settings-desc">Rechte Spalte mit Live-Kanälen und Videos</div>
+        </div>
+        <div class="settings-control"><button class="toggle" data-setting="showFeed"></button></div>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <div class="section-label"><i class="ti ti-bookmark"></i>Schnellzugriff</div>
+      <div id="quick-link-list"></div>
+      <form class="list-form" id="quick-link-form">
+        <input type="text" class="field-input" id="quick-link-label" placeholder="Name" autocomplete="off">
+        <input type="text" class="field-input" id="quick-link-url" placeholder="URL" autocomplete="off">
+        <input type="text" class="field-input" id="quick-link-icon" placeholder="Icon (optional)" autocomplete="off">
+        <button type="submit" class="btn"><i class="ti ti-plus"></i>Hinzufügen</button>
+      </form>
+      <p class="settings-hint">Icon-Namen von tabler.io/icons, z.&nbsp;B. <code>ti-brand-github</code>. Ohne Angabe wird <code>ti-link</code> verwendet.</p>
+    </div>
+
+    <div class="settings-group">
+      <div class="section-label"><i class="ti ti-search"></i>Suche</div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Suchmaschine</div>
+          <div class="settings-desc">Ziel der Suchleiste auf dem Dashboard</div>
+        </div>
+        <div class="settings-control">
+          <select class="field-input" id="setting-engine">
+            <option value="duckduckgo">DuckDuckGo</option>
+            <option value="google">Google</option>
+            <option value="bing">Bing</option>
+            <option value="startpage">Startpage</option>
+            <option value="ecosia">Ecosia</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <div class="section-label"><i class="ti ti-bell"></i>Benachrichtigungen</div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Browser-Benachrichtigungen</div>
+          <div class="settings-desc">Nur bei neuen Videos und Live-Streams — nicht beim Aktualisieren</div>
+        </div>
+        <div class="settings-control"><button class="toggle" data-setting="browserNotifications"></button></div>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <div class="section-label"><i class="ti ti-brand-youtube"></i>YouTube-Kanäle</div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Shorts ausblenden</div>
+          <div class="settings-desc">Nur normale Videos im Feed anzeigen</div>
+        </div>
+        <div class="settings-control"><button class="toggle" data-setting="hideShorts"></button></div>
+      </div>
+      <div id="youtube-channel-list"></div>
+      <form class="list-form" id="youtube-channel-form">
+        <input type="text" class="field-input" id="youtube-channel-name" placeholder="Anzeigename" autocomplete="off">
+        <input type="text" class="field-input" id="youtube-channel-id" placeholder="Channel-ID (UC...)" autocomplete="off">
+        <button type="submit" class="btn"><i class="ti ti-plus"></i>Hinzufügen</button>
+      </form>
+    </div>
+
+    <div class="settings-group">
+      <div class="section-label"><i class="ti ti-brand-twitch"></i>Twitch-Kanäle</div>
+      <div id="twitch-channel-list"></div>
+      <form class="list-form" id="twitch-channel-form">
+        <input type="text" class="field-input" id="twitch-channel-name" placeholder="Kanalname" autocomplete="off">
+        <button type="submit" class="btn"><i class="ti ti-plus"></i>Hinzufügen</button>
+      </form>
+    </div>
+
+    <div class="settings-group">
+      <div class="section-label"><i class="ti ti-flask"></i>Test &amp; Zurücksetzen</div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Video-Glow erzwingen</div>
+          <div class="settings-desc">Lässt die Videos-Box leuchten, auch ohne Video von heute</div>
+        </div>
+        <div class="settings-control"><button class="toggle" data-setting="forceGlow"></button></div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Entwickler-Favoriten einstellen</div>
+          <div class="settings-desc">Lädt Name, YouTube- und Twitch-Kanäle des Entwicklers</div>
+        </div>
+        <div class="settings-control">
+          <button class="btn" id="developer-preset"><i class="ti ti-heart"></i>Laden</button>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Test-Benachrichtigung</div>
+          <div class="settings-desc">Zeigt einen Toast und eine Browser-Benachrichtigung</div>
+        </div>
+        <div class="settings-control">
+          <button class="btn" id="test-notification"><i class="ti ti-bell"></i>Testen</button>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Jetzt aktualisieren</div>
+          <div class="settings-desc">Lädt Videos und Twitch-Status sofort neu</div>
+        </div>
+        <div class="settings-control">
+          <button class="btn" id="manual-refresh"><i class="ti ti-refresh"></i>Aktualisieren</button>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <div class="settings-name">Einstellungen zurücksetzen</div>
+          <div class="settings-desc">Setzt alles auf die Standardwerte zurück</div>
+        </div>
+        <div class="settings-control">
+          <button class="btn danger" id="reset-settings"><i class="ti ti-rotate"></i>Zurücksetzen</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div id="sidebar">
+  <div class="section-label"><i class="ti ti-rss"></i>Feed</div>
+  <div id="live-list"></div>
+  <div id="feed-list">
+    <div class="skeleton skeleton-line"></div>
+    <div class="skeleton skeleton-line"></div>
+    <div class="skeleton skeleton-line"></div>
+  </div>
+</div>
+
+<div id="channel-dialog" class="dialog-backdrop" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="channel-dialog-title">
+    <div class="dialog-header">
+      <div class="dialog-title" id="channel-dialog-title"></div>
+      <button class="dialog-close" id="channel-dialog-close" aria-label="Schließen"><i class="ti ti-x"></i></button>
+    </div>
+    <form id="channel-dialog-form">
+      <div class="dialog-fields" id="channel-dialog-fields"></div>
+      <p class="dialog-hint" id="channel-dialog-hint"></p>
+      <div class="dialog-actions">
+        <button type="button" class="btn" id="channel-dialog-cancel">Abbrechen</button>
+        <button type="submit" class="btn primary"><i class="ti ti-plus"></i>Hinzufügen</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="toasts"></div>
+
+<div id="context-menu" hidden></div>
+
+<script type="module" src="js/main.js"></script>
+
+</body>
+</html>
