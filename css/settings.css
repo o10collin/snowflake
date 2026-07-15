@@ -1,0 +1,264 @@
+/* Settings panel: rows, toggles, segmented controls, swatches, channel lists. */
+
+#view-settings {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.settings-group {
+  margin-bottom: 34px;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  margin-bottom: 6px;
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.settings-row:last-child {
+  margin-bottom: 0;
+}
+
+.settings-info {
+  min-width: 0;
+}
+
+.settings-name {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.settings-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.settings-control {
+  flex-shrink: 0;
+}
+
+.toggle {
+  position: relative;
+  width: 38px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  border: 0.5px solid var(--border-input);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.16s ease, border-color 0.16s ease;
+}
+
+.toggle::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--icon);
+  transition: transform 0.16s ease, background 0.16s ease;
+}
+
+.toggle.on {
+  background: rgba(var(--accent-rgb), 0.25);
+  border-color: rgba(var(--accent-rgb), 0.5);
+}
+
+.toggle.on::after {
+  transform: translateX(16px);
+  background: var(--accent);
+}
+
+.segmented {
+  display: flex;
+  gap: 3px;
+  background: var(--bg-elevated);
+  border: 0.5px solid var(--border-input);
+  border-radius: 9px;
+  padding: 3px;
+}
+
+.segmented button {
+  padding: 5px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-family: "JetBrains Mono", monospace;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.segmented button:hover {
+  color: var(--text);
+}
+
+.segmented button.active {
+  background: rgba(var(--accent-rgb), 0.18);
+  color: var(--text-bright);
+}
+
+.swatches {
+  display: flex;
+  gap: 8px;
+}
+
+.swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  outline: 0.5px solid var(--border-input);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.12s ease;
+}
+
+.swatch:hover {
+  transform: scale(1.12);
+}
+
+.swatch.active {
+  border-color: var(--bg-card);
+  outline: 1.5px solid var(--text-bright);
+}
+
+.field-input {
+  background: var(--bg-input);
+  border: 0.5px solid var(--border-input);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field-input::placeholder {
+  color: var(--text-dim);
+}
+
+.field-input:focus {
+  border-color: rgba(var(--accent-rgb), 0.5);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+select.field-input {
+  cursor: pointer;
+}
+
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  margin-bottom: 6px;
+  border: 0.5px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.list-row i.list-row-icon {
+  font-size: 15px;
+  color: var(--icon);
+  flex-shrink: 0;
+}
+
+.list-row-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-row-title {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.list-row-detail {
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-row-remove {
+  flex-shrink: 0;
+  color: var(--text-dim);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  transition: color 0.12s ease;
+}
+
+.list-row-remove:hover {
+  color: var(--danger);
+}
+
+.settings-hint {
+  margin-top: 10px;
+  padding: 0 2px;
+  font-size: 10px;
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+
+.settings-hint code {
+  font-family: "JetBrains Mono", monospace;
+  color: var(--text-muted);
+}
+
+.list-form {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.list-form .field-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 0.5px solid var(--border-input);
+  border-radius: 8px;
+  background: var(--bg-input);
+  color: var(--text-nav);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.btn:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-elevated);
+  color: var(--text-bright);
+}
+
+.btn.danger:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}

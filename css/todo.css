@@ -1,0 +1,113 @@
+/* To-do widget. */
+
+#todo-form {
+  margin-bottom: 10px;
+}
+
+#todo-input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 0.5px solid var(--border-input);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12);
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+#todo-input::placeholder {
+  color: var(--text-dim);
+}
+
+#todo-input:focus {
+  border-color: rgba(var(--accent-rgb), 0.5);
+  background: var(--bg-input-focus);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), 0 0 0 3px var(--focus-ring);
+}
+
+#todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 0.5px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.todo-item:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+}
+
+.todo-check {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  border: 0.5px solid var(--border-strong);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  font-size: 11px;
+  padding: 0;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.todo-item.done .todo-check {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+  word-break: break-word;
+}
+
+.todo-item.done .todo-text {
+  color: var(--text-dim);
+  text-decoration: line-through;
+}
+
+.todo-remove {
+  flex-shrink: 0;
+  color: var(--text-dim);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.12s ease, color 0.12s ease;
+}
+
+.todo-item:hover .todo-remove {
+  opacity: 1;
+}
+
+.todo-remove:hover {
+  color: var(--danger);
+}
+
+.todo-empty {
+  color: var(--text-faint);
+  font-size: 12px;
+  padding: 2px;
+}

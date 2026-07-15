@@ -1,0 +1,82 @@
+/* Colour tokens. :root is the dark theme; [data-theme="light"] overrides it. */
+
+:root {
+  /* the "mono" accent flips with the theme so it stays visible on both */
+  --mono-rgb: 228, 228, 233;
+  --accent-rgb: var(--mono-rgb);
+  --accent: rgb(var(--accent-rgb));
+
+  --bg: #0e0e0f;
+  --bg-glow: #17171a;
+  --bg-panel: #131315;
+  --bg-card: #18181a;
+  --bg-card-hover: #1c1c1f;
+  --bg-input: #1a1a1c;
+  --bg-input-focus: #1e1e21;
+  --bg-elevated: #1f1f22;
+  --bg-active: #2b2b30;
+  --bg-skeleton: #212123;
+
+  --border: #232325;
+  --border-hover: #2c2c2e;
+  --border-input: #2a2a2d;
+  --border-strong: #3a3a3d;
+
+  --text: #e0e0e0;
+  --text-bright: #ececec;
+  --text-nav: #b8b8ba;
+  --text-muted: #6b6b6b;
+  --text-dim: #55555a;
+  --text-faint: #4a4a4a;
+
+  --icon: #6b6b6b;
+  --icon-hover: #a0a0a0;
+  --icon-active: #d0d0d0;
+
+  --danger: #d99b9b;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.35);
+  --shadow-dialog: 0 20px 50px rgba(0, 0, 0, 0.5);
+  --focus-ring: rgba(var(--accent-rgb), 0.13);
+  --scrim: rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="light"] {
+  --mono-rgb: 58, 58, 62;
+
+  --bg: #f4f4f2;
+  --bg-glow: #ffffff;
+  --bg-panel: #fbfbfa;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f6f6f4;
+  --bg-input: #ffffff;
+  --bg-input-focus: #ffffff;
+  --bg-elevated: #f0f0ee;
+  --bg-active: #e6e6e2;
+  --bg-skeleton: #ebebe8;
+
+  --border: #e2e2de;
+  --border-hover: #d2d2cc;
+  --border-input: #dedeD8;
+  --border-strong: #b4b4ac;
+
+  --text: #2c2c28;
+  --text-bright: #16161a;
+  --text-nav: #45453e;
+  --text-muted: #78786f;
+  --text-dim: #9b9b92;
+  --text-faint: #adada4;
+
+  --icon: #8a8a80;
+  --icon-hover: #45453e;
+  --icon-active: #2c2c28;
+
+  --danger: #b45c5c;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.09);
+  --shadow-dialog: 0 20px 50px rgba(0, 0, 0, 0.18);
+  --focus-ring: rgba(var(--accent-rgb), 0.13);
+  --scrim: rgba(0, 0, 0, 0.3);
+}

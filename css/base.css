@@ -1,0 +1,197 @@
+/* Reset, page grid, scrollbars, nav / main / sidebar shells, view switching. */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 260px 1fr 260px;
+  grid-template-areas: "nav main feed";
+  overflow: hidden;
+  background: radial-gradient(ellipse 1100px 700px at 18% -12%, var(--bg-glow) 0%, transparent 60%), var(--bg);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+body.hide-sidebar,
+body.no-feed {
+  grid-template-columns: 260px 1fr;
+  grid-template-areas: "nav main";
+}
+
+body.hide-sidebar #sidebar,
+body.no-feed #sidebar {
+  display: none;
+}
+
+#nav, #main, #sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-hover) transparent;
+}
+
+#nav::-webkit-scrollbar, #main::-webkit-scrollbar, #sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+#nav::-webkit-scrollbar-track, #main::-webkit-scrollbar-track, #sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#nav::-webkit-scrollbar-thumb, #main::-webkit-scrollbar-thumb, #sidebar::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+#nav::-webkit-scrollbar-thumb:hover, #main::-webkit-scrollbar-thumb:hover, #sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--accent-rgb), 0.45);
+  background-clip: padding-box;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.section-label i {
+  font-size: 14px;
+}
+
+#nav {
+  grid-area: nav;
+  background: var(--bg-panel);
+  border-right: 0.5px solid var(--border);
+  padding: 22px 18px;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#nav-bottom {
+  margin-top: auto;
+}
+
+#logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-bright);
+  margin-bottom: 30px;
+  padding: 0 4px;
+}
+
+#logo i {
+  font-size: 19px;
+  color: var(--accent);
+}
+
+#nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+#nav button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  color: var(--text-nav);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+#nav button i {
+  font-size: 16px;
+  color: var(--icon);
+  width: 18px;
+  text-align: center;
+  transition: color 0.12s ease;
+}
+
+#nav button span.label {
+  flex: 1;
+}
+
+#nav button .nav-shortcut {
+  font-size: 9px;
+  color: var(--text-dim);
+  border: 0.5px solid var(--border-hover);
+  border-radius: 4px;
+  padding: 2px 5px;
+}
+
+#nav button:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-bright);
+}
+
+#nav button:hover i {
+  color: var(--icon-hover);
+}
+
+#nav button.active {
+  background: rgba(var(--accent-rgb), 0.14);
+  color: var(--text-bright);
+}
+
+#nav button.active i {
+  color: var(--accent);
+}
+
+#main {
+  grid-area: main;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+  animation: fade-in 0.18s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#view-dashboard.active {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
