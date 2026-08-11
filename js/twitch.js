@@ -1,5 +1,3 @@
-// Twitch live status: polling, rendering, and went-live detection.
-
 import { settings } from "./store.js";
 import { state } from "./state.js";
 import { fetchWithTimeout } from "./util.js";
@@ -20,7 +18,6 @@ async function fetchStreamStatus(channelName) {
   }
 }
 
-// ---------- rendering ----------
 function renderStreamGrid(streams) {
   const container = document.getElementById("stream-grid");
 
@@ -35,7 +32,6 @@ function renderStreamGrid(streams) {
 
   container.innerHTML = "";
 
-  // live channels first
   const ordered = [...streams].sort((a, b) => Number(b.isLive) - Number(a.isLive));
 
   ordered.forEach(stream => {
@@ -66,9 +62,6 @@ function renderLivePills(streams) {
   });
 }
 
-// ---------- went-live detection ----------
-// `null` until the first usable poll, so channels already live when the page
-// opens don't fire, and a fully failed poll doesn't seed a false baseline.
 let liveChannelsLastPoll = null;
 
 export function findNewlyLive(streams) {
@@ -99,7 +92,6 @@ function announceNewlyLive(channels) {
   });
 }
 
-// ---------- loading ----------
 let latestRequestId = 0;
 
 export async function loadStreams() {
@@ -115,7 +107,7 @@ export async function loadStreams() {
   }
 
   const streams = await Promise.all(channels.map(fetchStreamStatus));
-  if (requestId !== latestRequestId) return; // superseded by a newer load
+  if (requestId !== latestRequestId) return;
 
   state.streams = streams;
   renderStreamGrid(streams);

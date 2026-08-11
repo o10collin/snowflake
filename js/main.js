@@ -1,6 +1,3 @@
-// Entry point: wires the modules together, runs the first render, and owns the
-// background refresh loop.
-
 import { REFRESH_INTERVAL_MS, TOAST_DURATION_MS, CHANNELS_CHANGED_EVENT } from "./config.js";
 import { showToast, requestNotificationPermission, sendNotification } from "./notify.js";
 import { renderQuickLinks, renderTodos, initTodo, renderGreeting, renderClock } from "./dashboard.js";
@@ -14,13 +11,10 @@ import { loadStreams } from "./twitch.js";
 const GREETING_INTERVAL_MS = 30 * 1000;
 const CLOCK_INTERVAL_MS = 1000;
 
-// ---------- background refresh ----------
 let refreshInFlight = false;
 
-// Silent by design: nothing on screen changes until the new data has arrived,
-// and even then only if it differs from what's displayed.
 async function refreshAll() {
-  if (refreshInFlight) return; // a slow refresh must not stack with the next tick
+  if (refreshInFlight) return;
   refreshInFlight = true;
 
   try {
@@ -38,15 +32,13 @@ async function refreshAll() {
 
 function initRefresh() {
   setInterval(() => {
-    // don't hammer the proxies while the tab is in the background
+
     if (document.visibilityState === "visible") refreshAll();
   }, REFRESH_INTERVAL_MS);
 
   document.getElementById("manual-refresh").addEventListener("click", refreshAll);
 }
 
-// Deliberately bypasses the browserNotifications toggle: the click is an explicit
-// request for both, and a test that silently does nothing is worse than useless.
 function initNotificationTest() {
   document.getElementById("test-notification").addEventListener("click", async () => {
     showToast({ icon: "ti-bell", title: "Test-Benachrichtigung", detail: "So sieht ein Hinweis aus" });
@@ -73,8 +65,6 @@ function initNotificationTest() {
   });
 }
 
-// The quick-add dialog only touches the store, so reloading the affected feed
-// (and refreshing the settings lists) is wired up here instead.
 function initChannelSync() {
   document.addEventListener(CHANNELS_CHANGED_EVENT, (event) => {
     renderSettingsUI();
@@ -89,7 +79,6 @@ function initChannelSync() {
   });
 }
 
-// ---------- start ----------
 initNavigation();
 initChannelDialog();
 initChannelSync();

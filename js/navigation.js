@@ -1,5 +1,3 @@
-// View switching, the right-click menu, search, and keyboard shortcuts.
-
 import {
   WINDOWS_VM_URL,
   MAX_VIDEO_SHORTCUTS,
@@ -12,7 +10,6 @@ import { relativeTime } from "./util.js";
 
 const MENU_VIEWPORT_MARGIN = 8;
 
-// ---------- view switching ----------
 export function switchView(viewName) {
   const navButton = document.querySelector(`.nav-btn[data-view="${viewName}"]`);
   if (!navButton) return;
@@ -32,7 +29,6 @@ function initViewSwitching() {
   });
 }
 
-// ---------- right-click menu ----------
 let contextMenu;
 
 function createMenuItem({ icon, label, url, detail }) {
@@ -89,8 +85,6 @@ function openContextMenu(x, y) {
   buildContextMenu();
   contextMenu.hidden = false;
 
-  // offsetWidth/Height, not getBoundingClientRect: the open animation starts at
-  // scale(0.97), and a transformed rect would measure small and under-clamp.
   const margin = MENU_VIEWPORT_MARGIN;
   const left = Math.max(margin, Math.min(x, window.innerWidth - contextMenu.offsetWidth - margin));
   const top = Math.max(margin, Math.min(y, window.innerHeight - contextMenu.offsetHeight - margin));
@@ -106,7 +100,7 @@ function initContextMenu() {
   contextMenu = document.getElementById("context-menu");
 
   document.addEventListener("contextmenu", (event) => {
-    // leave the native menu alone in text fields so copy/paste still works
+
     if (event.target.closest("input, textarea, select")) {
       closeContextMenu();
       return;
@@ -120,7 +114,6 @@ function initContextMenu() {
   window.addEventListener("resize", closeContextMenu);
 }
 
-// ---------- search ----------
 function initSearch() {
   document.getElementById("search-form").addEventListener("submit", (event) => {
     event.preventDefault();
@@ -134,7 +127,6 @@ function initSearch() {
   });
 }
 
-// ---------- keyboard shortcuts ----------
 const VIEW_SHORTCUTS = {
   KeyD: "dashboard",
   KeyY: "youtube",

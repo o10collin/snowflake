@@ -1,5 +1,3 @@
-/* Mobile (<900px). Must load last so it wins the cascade. */
-
 @media (max-width: 900px) {
   body, body.hide-sidebar, body.no-feed {
     display: flex;
@@ -46,8 +44,7 @@
   #nav button {
     width: auto;
     justify-content: center;
-    /* horizontal padding keeps the active pill wider than tall, and the
-       min-width keeps the tap target reachable */
+
     padding: 9px 20px;
     min-width: 58px;
     border-radius: 10px;
@@ -105,7 +102,6 @@
     padding: 28px 20px;
   }
 
-  /* one column of 4:3 boxes wastes most of a phone screen — go compact rows */
   #video-grid, #stream-grid {
     grid-template-columns: 1fr;
     gap: 6px;
@@ -129,7 +125,7 @@
   }
 
   .stream-card {
-    flex-direction: row-reverse; /* channel name left, status badge right */
+    flex-direction: row-reverse;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
@@ -147,7 +143,6 @@
     overflow-y: visible;
   }
 
-  /* clear the fixed bottom nav */
   #toasts {
     right: 12px;
     left: 12px;
@@ -171,7 +166,6 @@
     width: 100%;
   }
 
-  /* a toggle is small enough to stay on the same line */
   .settings-row:has(.toggle) {
     flex-direction: row;
     align-items: center;

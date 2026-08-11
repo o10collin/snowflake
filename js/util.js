@@ -1,5 +1,3 @@
-// Small dependency-free helpers: network plumbing and formatting.
-
 import { CORS_PROXIES } from "./config.js";
 
 export function setHidden(element, hidden) {
@@ -12,8 +10,6 @@ export function fetchWithTimeout(url, timeoutMs) {
   return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
 }
 
-// Walks the proxy list; one that is rate-limited, down, or returning junk falls
-// through to the next.
 export async function fetchThroughProxy(targetUrl) {
   for (const buildProxyUrl of CORS_PROXIES) {
     try {

@@ -1,5 +1,3 @@
-/* YouTube + Twitch feeds: sidebar list, card grids, live pills, skeletons. */
-
 #live-list {
   display: flex;
   flex-direction: column;
@@ -224,7 +222,6 @@
   color: var(--text-bright);
 }
 
-/* Compact inline note — used by the channel lists in settings. */
 .empty-state {
   display: flex;
   align-items: center;
@@ -233,8 +230,6 @@
   font-size: 12px;
 }
 
-/* Where a whole section is empty the same class becomes a callout that offers a
-   way out, since an empty region otherwise gives the user nothing to act on. */
 #video-grid .empty-state,
 #stream-grid .empty-state,
 #feed-list .empty-state {
@@ -258,7 +253,6 @@
   color: var(--icon);
 }
 
-/* the sidebar is only ~220px wide, so it gets a tighter version */
 #feed-list .empty-state {
   gap: 11px;
   padding: 26px 12px;

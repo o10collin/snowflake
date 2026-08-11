@@ -1,7 +1,5 @@
-/* Colour tokens. :root is the dark theme; [data-theme="light"] overrides it. */
-
 :root {
-  /* the "mono" accent flips with the theme so it stays visible on both */
+
   --mono-rgb: 228, 228, 233;
   --accent-rgb: var(--mono-rgb);
   --accent: rgb(var(--accent-rgb));

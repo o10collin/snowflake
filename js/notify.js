@@ -1,12 +1,8 @@
-// In-page toasts (bottom right) and browser notifications.
-
 import { TOAST_DURATION_MS } from "./config.js";
 import { settings } from "./store.js";
 
-const TOAST_EXIT_MS = 200; // must match the toast-out animation in overlays.css
+const TOAST_EXIT_MS = 200;
 
-// Named options rather than positional arguments — at five parameters the call
-// sites became unreadable.
 export function showToast({ icon, title, detail, url, duration = TOAST_DURATION_MS.event }) {
   const toast = document.createElement(url ? "a" : "div");
   toast.className = "toast";
@@ -35,11 +31,10 @@ export function showToast({ icon, title, detail, url, duration = TOAST_DURATION_
 export async function requestNotificationPermission() {
   if (!("Notification" in window)) return false;
   if (Notification.permission === "granted") return true;
-  if (Notification.permission === "denied") return false; // only the user can undo this
+  if (Notification.permission === "denied") return false;
   return (await Notification.requestPermission()) === "granted";
 }
 
-// Unconditional send — only for the explicit "test notification" button.
 export function sendNotification(title, body, url) {
   const notification = new Notification(title, { body, icon: "https://www.youtube.com/favicon.ico" });
   if (url) {
@@ -50,7 +45,6 @@ export function sendNotification(title, body, url) {
   }
 }
 
-// The normal path: honours the user's preference and the permission state.
 export function notifyIfEnabled(title, body, url) {
   if (!settings.browserNotifications) return;
   if (!("Notification" in window) || Notification.permission !== "granted") return;

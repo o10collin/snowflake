@@ -1,8 +1,3 @@
-// The "nothing configured yet" placeholder shown wherever a feed has no channels.
-//
-// Its action opens the quick-add dialog rather than sending the user off to the
-// settings view — the whole point is to fix the gap without leaving the page.
-
 import { openChannelDialog } from "./channel-dialog.js";
 
 export function renderEmptyState(container, { message, actionLabel, source }) {

@@ -1,6 +1,3 @@
-// Projects the current settings onto the page: theme, accent, and which
-// dashboard sections are visible.
-
 import { ACCENTS } from "./config.js";
 import { settings } from "./store.js";
 import { state } from "./state.js";

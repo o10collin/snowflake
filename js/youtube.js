@@ -1,5 +1,3 @@
-// YouTube feed: fetching, rendering, and new-video detection.
-
 import { SIDEBAR_FEED_LIMIT, MAX_VIDEO_SHORTCUTS } from "./config.js";
 import { settings } from "./store.js";
 import { state } from "./state.js";
@@ -8,12 +6,8 @@ import { showToast, notifyIfEnabled } from "./notify.js";
 import { renderStats } from "./dashboard.js";
 import { renderEmptyState } from "./empty-state.js";
 
-const MAX_INDIVIDUAL_ANNOUNCEMENTS = 3; // beyond this, collapse into one summary
+const MAX_INDIVIDUAL_ANNOUNCEMENTS = 3;
 
-// ---------- fetching ----------
-// YouTube keeps a per-channel "long-form only" playlist: UULF + the channel id
-// minus its UC prefix. Reading that instead of the channel feed drops Shorts at
-// no extra request cost — the RSS itself carries no duration or Shorts flag.
 export function buildFeedUrl(channelId) {
   if (settings.hideShorts && channelId.startsWith("UC")) {
     return `https://www.youtube.com/feeds/videos.xml?playlist_id=UULF${channelId.slice(2)}`;
@@ -38,7 +32,6 @@ async function fetchChannelVideos(channelName, channelId) {
   }
 }
 
-// ---------- rendering ----------
 function failedChannelMarkup(channelName) {
   return `
     <div class="channel-label"><i class="ti ti-brand-youtube"></i>${channelName}</div>
@@ -114,10 +107,6 @@ export function renderLatestVideo(video) {
   section.style.display = "";
 }
 
-// ---------- new-video detection ----------
-// Seeded on the first successful load so the existing backlog isn't announced.
-// `null` means "not seeded yet" — a failed load must not seed an empty baseline,
-// or every video would look new on the next refresh.
 let seenVideoUrls = null;
 
 export function findUnseenVideos(videos) {
@@ -154,13 +143,8 @@ function announceNewVideos(videos) {
   });
 }
 
-// ---------- loading ----------
-// Incremented per call so a slow earlier fetch can't overwrite a newer one's
-// results (e.g. toggling Shorts twice, or editing channels mid-request).
 let latestRequestId = 0;
 
-// Identifies what's currently drawn, so an unchanged background refresh doesn't
-// rebuild the DOM and throw away hover states.
 let renderedFeedKey = "";
 
 function feedKeyFor(videos) {
@@ -174,7 +158,7 @@ export async function loadVideos() {
   if (channels.length === 0) {
     state.videos = [];
     state.shortcutVideos = [];
-    renderedFeedKey = ""; // so re-adding the same channels still redraws
+    renderedFeedKey = "";
     renderVideoGrid([]);
     renderEmptyState(document.getElementById("feed-list"), {
       message: "Noch keine Kanäle.",
@@ -187,7 +171,7 @@ export async function loadVideos() {
   }
 
   const results = await Promise.all(channels.map(channel => fetchChannelVideos(channel.name, channel.id)));
-  if (requestId !== latestRequestId) return; // superseded by a newer load
+  if (requestId !== latestRequestId) return;
 
   const entries = results.flat();
   const videos = entries.filter(entry => !entry.error);

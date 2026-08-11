@@ -1,5 +1,3 @@
-// The settings panel: reflecting state into the controls and handling edits.
-
 import { ACCENTS, DEVELOPER_PRESET, DEFAULT_QUICK_LINK_ICON } from "./config.js";
 import { settings, saveSettings, resetSettings, applyPreset } from "./store.js";
 import { showToast, requestNotificationPermission } from "./notify.js";
@@ -15,13 +13,10 @@ function reloadFeeds() {
   loadStreams();
 }
 
-// A bare "google.com" would otherwise resolve as a relative path.
 function normalizeUrl(url) {
   return /^https?:\/\//i.test(url) ? url : `https://${url}`;
 }
 
-// ---------- editable lists ----------
-// All three lists share the same row shape: icon, title, optional detail, remove.
 function createListRow({ icon, title, detail, source, index }) {
   const row = document.createElement("div");
   row.className = "list-row";
@@ -82,7 +77,6 @@ function renderTwitchChannelList() {
   });
 }
 
-// ---------- panel state ----------
 function renderAccentSwatches() {
   const container = document.getElementById("accent-swatches");
   container.innerHTML = "";
@@ -117,14 +111,12 @@ export function renderSettingsUI() {
   renderTwitchChannelList();
 }
 
-// ---------- handlers ----------
 function initToggles() {
   document.querySelectorAll(".toggle[data-setting]").forEach(toggle => {
     toggle.addEventListener("click", async () => {
       const key = toggle.dataset.setting;
       settings[key] = !settings[key];
 
-      // switching this on only means anything if the browser grants permission
       if (key === "browserNotifications" && settings[key]) {
         const granted = await requestNotificationPermission();
         if (!granted) {
@@ -141,7 +133,6 @@ function initToggles() {
       toggle.classList.toggle("on", settings[key]);
       applySettings();
 
-      // this one changes which feed URL we read, so the videos must be refetched
       if (key === "hideShorts") loadVideos();
     });
   });
@@ -186,7 +177,6 @@ function initTextFields() {
   });
 }
 
-// One delegated handler for every list in the panel.
 const REMOVE_HANDLERS = {
   quicklink: (index) => {
     settings.quickLinks.splice(index, 1);

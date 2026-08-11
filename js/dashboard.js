@@ -1,10 +1,7 @@
-// Dashboard widgets: greeting, clock, stat tiles, quick links, to-do.
-
 import { DEFAULT_QUICK_LINK_ICON } from "./config.js";
 import { settings, loadTodos, saveTodos } from "./store.js";
 import { state } from "./state.js";
 
-// ---------- greeting + clock ----------
 function greetingForHour(hour) {
   if (hour < 5) return "Guten Abend";
   if (hour < 12) return "Guten Morgen";
@@ -33,9 +30,6 @@ export function renderClock() {
     new Date().toLocaleTimeString(settings.clock24h ? "de-DE" : "en-US", format);
 }
 
-// ---------- stat tiles ----------
-// Reads `state` rather than importing youtube.js / twitch.js, which would make
-// those modules and this one circular.
 export function renderStats() {
   const liveCount = state.streams.filter(stream => stream.isLive).length;
 
@@ -55,7 +49,6 @@ export function renderStats() {
   document.getElementById("stat-videos-tile").classList.toggle("glow", glowing);
 }
 
-// ---------- quick links ----------
 export function renderQuickLinks() {
   const container = document.getElementById("quick-links");
   container.innerHTML = "";
@@ -71,7 +64,6 @@ export function renderQuickLinks() {
   });
 }
 
-// ---------- to-do ----------
 export function renderTodos() {
   const todos = loadTodos();
   const container = document.getElementById("todo-list");

@@ -1,9 +1,3 @@
-// Quick-add dialog for a single YouTube or Twitch channel.
-//
-// It only reaches for the store, then announces CHANNELS_CHANGED_EVENT. Importing
-// youtube.js/twitch.js to reload their feeds would be circular — they're the ones
-// that open this dialog — so main.js does the reloading instead.
-
 import { CHANNELS_CHANGED_EVENT } from "./config.js";
 import { settings, saveSettings } from "./store.js";
 
@@ -65,7 +59,7 @@ function readFields(config) {
   const values = {};
   for (const field of config.fields) {
     const value = fieldsContainer.querySelector(`[name="${field.name}"]`).value.trim();
-    if (!value) return null; // every field is required
+    if (!value) return null;
     values[field.name] = value;
   }
   return values;
@@ -96,7 +90,6 @@ export function initChannelDialog() {
   document.getElementById("channel-dialog-close").addEventListener("click", closeChannelDialog);
   document.getElementById("channel-dialog-cancel").addEventListener("click", closeChannelDialog);
 
-  // the backdrop itself, not the dialog sitting on top of it
   backdrop.addEventListener("click", (event) => {
     if (event.target === backdrop) closeChannelDialog();
   });
